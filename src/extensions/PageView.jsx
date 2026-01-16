@@ -2,10 +2,10 @@ import { NodeViewContent, NodeViewWrapper } from '@tiptap/react'
 import React, { useEffect, useRef } from 'react'
 
 const PAGE_HEIGHT_PX = 1122
-const MARGIN_PX = 96
 
 const PageView = ({ node, updateAttributes, editor, getPos }) => {
     const pageRef = useRef(null)
+    const { header, footer, pageNumber } = node.attrs
 
     useEffect(() => {
         const checkOverflow = () => {
@@ -16,8 +16,6 @@ const PageView = ({ node, updateAttributes, editor, getPos }) => {
 
             if (contentHeight > maxHeight) {
                 // Find the overflow position
-                // This is a simplified version: split at the end of the current page
-                // In a more advanced version, we'd find the exact node that overflows.
                 console.log('Page overflow detected in NodeView')
             }
         }
@@ -31,10 +29,10 @@ const PageView = ({ node, updateAttributes, editor, getPos }) => {
     }, [editor.isEditable])
 
     return (
-        <NodeViewWrapper className="page-wrapper">
+        <NodeViewWrapper className="page-wrapper group relative">
             <div
                 ref={pageRef}
-                className="page shadow-lg bg-white mx-auto my-8 relative border border-gray-100"
+                className="page shadow-lg bg-white mx-auto my-8 relative border border-gray-100 print:shadow-none print:my-0"
                 style={{
                     width: '210mm',
                     minHeight: '297mm',
@@ -42,10 +40,20 @@ const PageView = ({ node, updateAttributes, editor, getPos }) => {
                     boxSizing: 'border-box'
                 }}
             >
-                <div className="absolute top-4 right-8 text-xs text-gray-400 select-none">
-                    Page {node.attrs.pageNumber}
+                {/* Header */}
+                <div className="absolute top-8 left-[25.4mm] right-[25.4mm] flex justify-between items-center text-[10px] text-gray-400 border-b border-gray-50 pb-1 italic select-none">
+                    <span>{header}</span>
+                    <span className="font-semibold text-gray-300">CONFIDENTIAL</span>
                 </div>
-                <NodeViewContent className="outline-none" />
+
+                {/* Content Area */}
+                <NodeViewContent className="outline-none min-h-[calc(297mm-50.8mm)]" />
+
+                {/* Footer */}
+                <div className="absolute bottom-8 left-[25.4mm] right-[25.4mm] flex justify-between items-center text-[10px] text-gray-400 border-t border-gray-50 pt-2 select-none">
+                    <span>{footer}</span>
+                    <span>Page {pageNumber}</span>
+                </div>
             </div>
         </NodeViewWrapper>
     )

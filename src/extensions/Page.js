@@ -14,6 +14,12 @@ const Page = Node.create({
             pageNumber: {
                 default: 1,
             },
+            header: {
+                default: 'Draft Document',
+            },
+            footer: {
+                default: 'LegalBridge Document Editor',
+            },
         }
     },
 
