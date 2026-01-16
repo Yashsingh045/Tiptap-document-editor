@@ -8,7 +8,9 @@ import {
     Heading2,
     Undo,
     Redo,
-    Table as TableIcon
+    Table as TableIcon,
+    Scissors,
+    Printer
 } from 'lucide-react'
 
 const Toolbar = ({ editor }) => {
@@ -60,6 +62,18 @@ const Toolbar = ({ editor }) => {
             label: 'Insert Table',
         },
         {
+            icon: <Scissors size={18} />,
+            onClick: () => {
+                const { from } = editor.state.selection
+                editor.chain().focus().splitPage(from).run()
+            },
+            isActive: false,
+            label: 'Insert Page Break',
+        },
+        {
+            type: 'separator',
+        },
+        {
             icon: <Undo size={18} />,
             onClick: () => editor.chain().focus().undo().run(),
             isActive: false,
@@ -71,23 +85,41 @@ const Toolbar = ({ editor }) => {
             isActive: false,
             label: 'Redo',
         },
+        {
+            type: 'spacer',
+        },
+        {
+            icon: <Printer size={18} />,
+            onClick: () => window.print(),
+            isActive: false,
+            label: 'Print Document',
+            className: 'bg-primary text-white hover:bg-primary/90 ml-auto',
+        },
     ]
 
     return (
-        <div className="sticky top-0 z-10 flex flex-wrap items-center gap-1 p-2 bg-white/80 backdrop-blur-md border-b shadow-sm">
-            {buttons.map((btn, i) => (
-                <button
-                    key={i}
-                    onClick={btn.onClick}
-                    className={`p-2 rounded-md transition-colors ${btn.isActive
-                            ? 'bg-primary/10 text-primary'
-                            : 'hover:bg-gray-100 text-gray-600'
-                        }`}
-                    title={btn.label}
-                >
-                    {btn.icon}
-                </button>
-            ))}
+        <div className="sticky top-0 z-10 flex items-center gap-1 p-2 bg-white/80 backdrop-blur-md border-b shadow-sm w-full overflow-x-auto no-scrollbar">
+            {buttons.map((btn, i) => {
+                if (btn.type === 'separator') {
+                    return <div key={i} className="w-px h-6 bg-gray-200 mx-1" />
+                }
+                if (btn.type === 'spacer') {
+                    return <div key={i} className="flex-1" />
+                }
+                return (
+                    <button
+                        key={i}
+                        onClick={btn.onClick}
+                        className={`p-2 rounded-md transition-all shrink-0 ${btn.isActive
+                                ? 'bg-primary/10 text-primary'
+                                : btn.className || 'hover:bg-gray-100 text-gray-600'
+                            }`}
+                        title={btn.label}
+                    >
+                        {btn.icon}
+                    </button>
+                )
+            })}
         </div>
     )
 }
