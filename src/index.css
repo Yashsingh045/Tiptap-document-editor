@@ -55,39 +55,20 @@ body {
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
-/* Page Styles */
+/* Page Styles handled by NodeView/React */
 .tiptap .page {
-  background: white;
-  width: 210mm;
-  min-height: 297mm;
-  padding: 25.4mm;
-  /* 1 inch margin */
-  margin: 20px auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  position: relative;
-  outline: none;
-  box-sizing: border-box;
-}
-
-.tiptap .page::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border: 1px solid #f0f0f0;
-  pointer-events: none;
+  page-break-after: always;
 }
 
 @media print {
   body {
     background: none;
+    margin: 0;
   }
 
-  .tiptap .page {
-    margin: 0;
-    box-shadow: none;
-    page-break-after: always;
+  .tiptap .page-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
   }
 }

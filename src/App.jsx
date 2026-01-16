@@ -20,19 +20,14 @@ const App = () => {
       Page,
     ],
     content: `
-      <div data-type="page">
+      <div data-type="page" data-page-number="1">
         <h1>Legal Document</h1>
-        <p>This is page 1 content.</p>
-        <p>Start typing here to see how it works.</p>
-      </div>
-      <div data-type="page">
-        <h1>Page 2</h1>
-        <p>This is page 2 content.</p>
+        <p>This is page 1 content. Start typing here to see how it works. If you add enough content, a new page should ideally be created.</p>
       </div>
     `,
     editorProps: {
       attributes: {
-        class: 'prose prose-slate focus:outline-none max-w-none',
+        class: 'prose prose-slate focus:outline-none max-w-none editor-root',
       },
     },
   })
@@ -42,9 +37,7 @@ const App = () => {
       <Toolbar editor={editor} />
 
       <main className="flex-1 overflow-auto p-4 md:p-8">
-        <div className="flex justify-center">
-          <EditorContent editor={editor} />
-        </div>
+        <EditorContent editor={editor} />
       </main>
 
       <div className="fixed bottom-4 right-4 bg-white/80 backdrop-blur shadow-md px-3 py-1 rounded-full text-xs text-gray-500 border z-50">
