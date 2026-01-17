@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Bold,
     Italic,
@@ -10,10 +10,33 @@ import {
     Redo,
     Table as TableIcon,
     Scissors,
-    Printer
+    Printer,
+    FileText
 } from 'lucide-react'
 
 const Toolbar = ({ editor }) => {
+    const [pageCount, setPageCount] = useState(0)
+
+    useEffect(() => {
+        if (!editor) return
+
+        const updatePageCount = () => {
+            let count = 0
+            editor.state.doc.descendants((node) => {
+                if (node.type.name === 'page') {
+                    count++
+                }
+            })
+            setPageCount(count)
+        }
+
+        updatePageCount()
+        editor.on('update', updatePageCount)
+        return () => {
+            editor.off('update', updatePageCount)
+        }
+    }, [editor])
+
     if (!editor) {
         return null
     }
@@ -89,11 +112,19 @@ const Toolbar = ({ editor }) => {
             type: 'spacer',
         },
         {
+            component: (
+                <div className="flex items-center gap-2 px-3 py-1 bg-gray-50 rounded-full border border-gray-100 text-xs font-medium text-gray-500 mr-2 shrink-0">
+                    <FileText size={14} className="text-primary" />
+                    <span>{pageCount} {pageCount === 1 ? 'Page' : 'Pages'}</span>
+                </div>
+            )
+        },
+        {
             icon: <Printer size={18} />,
             onClick: () => window.print(),
             isActive: false,
             label: 'Print Document',
-            className: 'bg-primary text-white hover:bg-primary/90 ml-auto',
+            className: 'bg-primary text-white hover:bg-primary/90 ml-auto shadow-sm',
         },
     ]
 
@@ -105,6 +136,9 @@ const Toolbar = ({ editor }) => {
                 }
                 if (btn.type === 'spacer') {
                     return <div key={i} className="flex-1" />
+                }
+                if (btn.component) {
+                    return <React.Fragment key={i}>{btn.component}</React.Fragment>
                 }
                 return (
                     <button
