@@ -15,7 +15,6 @@ const PageView = ({ node, updateAttributes, editor, getPos }) => {
             const maxHeight = PAGE_HEIGHT_PX
 
             if (contentHeight > maxHeight) {
-                // Find the overflow position
                 console.log('Page overflow detected in NodeView')
             }
         }
@@ -40,6 +39,9 @@ const PageView = ({ node, updateAttributes, editor, getPos }) => {
                     boxSizing: 'border-box'
                 }}
             >
+                {/* Margin Guides (Visible on hover) */}
+                <div className="margin-line opacity-0 group-hover:opacity-100 transition-opacity" />
+
                 {/* Header */}
                 <div className="absolute top-8 left-[25.4mm] right-[25.4mm] flex justify-between items-center text-[10px] text-gray-400 border-b border-gray-50 pb-1 italic select-none">
                     <span>{header}</span>

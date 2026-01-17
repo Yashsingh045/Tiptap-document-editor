@@ -55,9 +55,48 @@ body {
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Page Styles handled by NodeView/React */
 .tiptap .page {
   page-break-after: always;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tiptap .page:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.margin-line {
+  position: absolute;
+  top: 25.4mm;
+  bottom: 25.4mm;
+  left: 25.4mm;
+  right: 25.4mm;
+  border: 1px dashed rgba(0, 0, 0, 0.03);
+  pointer-events: none;
 }
 
 @media print {
