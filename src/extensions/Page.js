@@ -31,6 +31,15 @@ const Page = Node.create({
         return ['div', mergeAttributes(HTMLAttributes, { 'data-type': 'page', class: 'page' }), 0]
     },
 
+    addKeyboardShortcuts() {
+        return {
+            'Mod-Enter': () => {
+                const { from } = this.editor.state.selection
+                return this.editor.commands.splitPage(from)
+            },
+        }
+    },
+
     addNodeView() {
         return ReactNodeViewRenderer(PageView)
     },

@@ -1,9 +1,6 @@
 import { Extension } from '@tiptap/core'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 
-const PAGE_HEIGHT_PX = 1122
-const MARGIN_PX = 96
-
 const Pagination = Extension.create({
     name: 'pagination',
 
@@ -14,10 +11,10 @@ const Pagination = Extension.create({
                 view: (editorView) => {
                     return {
                         update: (view, prevState) => {
-                            // Debounce to avoid stuttering
                             if (this.storage.timeout) clearTimeout(this.storage.timeout)
                             this.storage.timeout = setTimeout(() => {
                                 this.options.handlePagination(view)
+                                this.options.syncPageNumbers(view)
                             }, 500)
                         }
                     }
@@ -34,28 +31,32 @@ const Pagination = Extension.create({
 
     addOptions() {
         return {
-            handlePagination: (view) => {
+            syncPageNumbers: (view) => {
                 const { state, dispatch } = view
-                const { doc, tr } = state
-
-                // Avoid nested calls
-                if (tr.getMeta('pagination')) return
-
+                let tr = state.tr
                 let modified = false
-                const pageElements = view.dom.querySelectorAll('.page')
+                let pageIdx = 1
 
-                if (pageElements.length === 0) {
-                    // Wrap everything in a page if missing
-                    // tr.setNodeMarkup(0, state.schema.nodes.page)
-                    return
+                state.doc.descendants((node, pos) => {
+                    if (node.type.name === 'page') {
+                        if (node.attrs.pageNumber !== pageIdx) {
+                            tr.setNodeMarkup(pos, null, {
+                                ...node.attrs,
+                                pageNumber: pageIdx,
+                            })
+                            modified = true
+                        }
+                        pageIdx++
+                    }
+                })
+
+                if (modified) {
+                    tr.setMeta('pagination-sync', true)
+                    dispatch(tr)
                 }
-
-                // Very basic reflow: if the last page overflows, add a new one?
-                // Actually, the current CSS handles the visual part.
-                // What we need is to make sure the PRINT output matches.
-
-                // For the purpose of this assignment, I will focus on the VISUAL PAGINATION
-                // that matches print specs.
+            },
+            handlePagination: (view) => {
+                // ... (existing logic or placeholder)
             }
         }
     }
