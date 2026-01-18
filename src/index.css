@@ -56,20 +56,21 @@ body {
 
 /* Realistic Page Styling */
 .page-wrapper {
-  perspective: 1000px;
+  display: block;
+  width: 100%;
 }
 
 .page {
   background: var(--card);
   width: 210mm;
   height: 297mm;
-  margin: 3rem auto;
+  margin: 2rem auto;
   position: relative;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   padding: 0;
-  overflow: visible;
-  /* Content can visually overflow during typing until split */
+  overflow: hidden;
+  /* Prevent visual overflow into margins in final view */
 }
 
 .scale-in {
@@ -121,17 +122,48 @@ body {
 }
 
 @media print {
-  body {
-    background: white;
+  .no-print {
+    display: none !important;
+  }
+
+  body,
+  html {
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .tiptap {
+    display: block !important;
+    overflow: visible !important;
+  }
+
+  .page-wrapper {
+    page-break-after: always !important;
+    page-break-inside: avoid !important;
+    display: block !important;
   }
 
   .page {
-    box-shadow: none !important;
     margin: 0 !important;
+    box-shadow: none !important;
+    width: 210mm !important;
+    height: 297mm !important;
     border: none !important;
+    position: relative !important;
   }
 
-  .no-print {
+  .margin-line,
+  .page-number-badge {
     display: none !important;
   }
 }

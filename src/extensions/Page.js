@@ -54,18 +54,50 @@ const Page = Node.create({
 
     addCommands() {
         return {
-            /**
-             * Structural command to split the current page at the given position.
-             */
+            insertPage: () => ({ commands, state }) => {
+                return commands.insertContentAt(state.doc.content.size, {
+                    type: this.name,
+                    content: [{ type: 'paragraph' }]
+                })
+            },
             splitPage: (pos) => ({ tr, state, dispatch }) => {
                 if (dispatch) {
-                    // Splitting at depth 2 ensures we split the Page node (depth 1 is Paragraph, depth 0 is Doc)
-                    // This creates a new Page node and moves subsequent content into it.
-                    tr.split(pos, 2, [{ type: state.schema.nodes.page.type }])
-                    return true
+                    let pagePos = -1
+                    state.doc.descendants((node, p) => {
+                        if (node.type.name === 'page' && pos >= p && pos <= p + node.nodeSize) {
+                            pagePos = p
+                        }
+                    })
+
+                    if (pagePos !== -1) {
+                        try {
+                            tr.split(pos, 2, [{ type: state.schema.nodes.page.type }])
+                            return true
+                        } catch (e) {
+                            console.error('splitPage failed:', e)
+                        }
+                    }
                 }
                 return false
             },
+            deletePage: (pos) => ({ tr, state, dispatch }) => {
+                if (dispatch) {
+                    let pagePos = -1
+                    let pageNode = null
+                    state.doc.descendants((node, p) => {
+                        if (node.type.name === 'page' && pos >= p && pos <= p + node.nodeSize) {
+                            pagePos = p
+                            pageNode = node
+                        }
+                    })
+
+                    if (pagePos !== -1) {
+                        tr.delete(pagePos, pagePos + pageNode.nodeSize)
+                        return true
+                    }
+                }
+                return false
+            }
         }
     },
 })

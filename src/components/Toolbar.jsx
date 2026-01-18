@@ -34,6 +34,7 @@ const Toolbar = ({ editor }) => {
     const CommandButton = ({ onClick, isActive, icon, label, className = '' }) => (
         <button
             onClick={onClick}
+            onMouseDown={(e) => e.preventDefault()}
             className={clsx(
                 "p-2 rounded-lg transition-all flex items-center justify-center gap-1.5 min-w-[36px] min-h-[36px] group",
                 isActive ? "bg-primary text-white shadow-md shadow-primary/20" : "text-slate-600 hover:bg-slate-100",
@@ -46,23 +47,12 @@ const Toolbar = ({ editor }) => {
     )
 
     const addPage = () => {
-        editor.chain().focus().insertContentAt(editor.state.doc.content.size, { type: 'page' }).run()
+        editor.chain().focus().insertPage().run()
     }
 
     const deleteCurrentPage = () => {
-        const { selection } = editor.state
-        let pagePos = -1
-        let pageNode = null
-
-        editor.state.doc.descendants((node, pos) => {
-            if (node.type.name === 'page' && selection.from >= pos && selection.from <= pos + node.nodeSize) {
-                pagePos = pos
-                pageNode = node
-            }
-        })
-
-        if (pagePos !== -1 && pageCount > 1) {
-            editor.chain().focus().deleteRange({ from: pagePos, to: pagePos + pageNode.nodeSize }).run()
+        if (pageCount > 1) {
+            editor.chain().focus().deletePage(editor.state.selection.from).run()
         }
     }
 
