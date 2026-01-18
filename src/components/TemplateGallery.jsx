@@ -11,8 +11,10 @@ const TEMPLATES = [
         bgColor: 'bg-white',
         content: `
             <div data-type="page" data-page-number="1">
-                <h1>Untitled Document</h1>
-                <p>Start typing your content here...</p>
+                <div class="page-content">
+                    <h1>Untitled Document</h1>
+                    <p>Start typing your content here...</p>
+                </div>
             </div>
         `
     },
@@ -24,19 +26,21 @@ const TEMPLATES = [
         bgColor: 'bg-blue-50/30',
         content: `
             <div data-type="page" data-page-number="1">
-                <h1 style="text-align: center">YOUR NAME</h1>
-                <p style="text-align: center; font-size: 14px; color: #666">City, Country | phone | email | linkedin.com/in/name</p>
-                <hr />
-                <h3>Experience</h3>
-                <p><strong>Senior Software Engineer</strong> | tech Corp | 2021 – Present</p>
-                <ul>
-                    <li>Led the development of a high-performance document editor.</li>
-                    <li>Managed a team of 5 developers to deliver features on time.</li>
-                </ul>
-                <h3>Education</h3>
-                <p><strong>Bachelor of Science in Computer Science</strong> | University of tech | 2017 – 2021</p>
-                <h3>Skills</h3>
-                <p>React, Tiptap, Tailwind CSS, Node.js, ProseMirror</p>
+                <div class="page-content">
+                    <h1 style="text-align: center">YOUR NAME</h1>
+                    <p style="text-align: center; font-size: 14px; color: #666">City, Country | phone | email | linkedin.com/in/name</p>
+                    <hr />
+                    <h3>Experience</h3>
+                    <p><strong>Senior Software Engineer</strong> | tech Corp | 2021 – Present</p>
+                    <ul>
+                        <li>Led the development of a high-performance document editor.</li>
+                        <li>Managed a team of 5 developers to deliver features on time.</li>
+                    </ul>
+                    <h3>Education</h3>
+                    <p><strong>Bachelor of Science in Computer Science</strong> | University of tech | 2017 – 2021</p>
+                    <h3>Skills</h3>
+                    <p>React, Tiptap, Tailwind CSS, Node.js, ProseMirror</p>
+                </div>
             </div>
         `
     },
@@ -48,13 +52,15 @@ const TEMPLATES = [
         bgColor: 'bg-rose-50/30',
         content: `
             <div data-type="page" data-page-number="1">
-                <p>Your Name<br />Your Address<br />City, ZIP</p>
-                <p style="margin-top: 40px">Date: ${new Date().toLocaleDateString()}</p>
-                <p style="margin-top: 40px"><strong>Recipient Name</strong><br />Recipient Address<br />City, ZIP</p>
-                <p style="margin-top: 40px">Dear [Recipient Name],</p>
-                <p>This is a professional letter template. You can start typing your message here. The layout is optimized for A4 paper and follows industry standards for formal correspondence.</p>
-                <p>Sincerely,</p>
-                <p style="margin-top: 40px">[Your Name]</p>
+                <div class="page-content">
+                    <p>Your Name<br />Your Address<br />City, ZIP</p>
+                    <p style="margin-top: 40px">Date: ${new Date().toLocaleDateString()}</p>
+                    <p style="margin-top: 40px"><strong>Recipient Name</strong><br />Recipient Address<br />City, ZIP</p>
+                    <p style="margin-top: 40px">Dear [Recipient Name],</p>
+                    <p>This is a professional letter template. You can start typing your message here. The layout is optimized for A4 paper and follows industry standards for formal correspondence.</p>
+                    <p>Sincerely,</p>
+                    <p style="margin-top: 40px">[Your Name]</p>
+                </div>
             </div>
         `
     }

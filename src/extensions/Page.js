@@ -11,9 +11,9 @@ import PageView from './PageView'
  */
 const Page = Node.create({
     name: 'page',
-    group: 'block',
     content: 'block+',
     defining: true,
+    isolating: true,
     draggable: false,
 
     addAttributes() {
@@ -31,7 +31,10 @@ const Page = Node.create({
     },
 
     parseHTML() {
-        return [{ tag: 'div[data-type="page"]' }]
+        return [{
+            tag: 'div[data-type="page"]',
+            contentElement: '.page-content'
+        }]
     },
 
     renderHTML({ HTMLAttributes }) {
@@ -71,7 +74,8 @@ const Page = Node.create({
 
                     if (pagePos !== -1) {
                         try {
-                            tr.split(pos, 2, [{ type: state.schema.nodes.page.type }])
+                            // Correctly pass the node type (not .type)
+                            tr.split(pos, 2, [{ type: state.schema.nodes.page }])
                             return true
                         } catch (e) {
                             console.error('splitPage failed:', e)

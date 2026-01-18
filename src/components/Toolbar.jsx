@@ -74,11 +74,7 @@ const Toolbar = ({ editor }) => {
                         label="Delete Page"
                         className="text-rose-500 hover:bg-rose-50"
                     />
-                    <CommandButton
-                        onClick={() => editor.chain().focus().splitPage(editor.state.selection.from).run()}
-                        icon={<Scissors size={18} />}
-                        label="Page Break"
-                    />
+
                 </div>
 
                 {/* Text Group */}

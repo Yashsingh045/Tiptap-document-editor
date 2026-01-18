@@ -6,6 +6,7 @@ import { TableCell } from '@tiptap/extension-table-cell'
 import { TableHeader } from '@tiptap/extension-table-header'
 import Toolbar from './components/Toolbar'
 import Page from './extensions/Page'
+import Document from './extensions/Document'
 import Pagination from './extensions/Pagination'
 import DocumentSettings from './components/DocumentSettings'
 import { useState } from 'react'
@@ -17,7 +18,10 @@ const App = () => {
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      Document,
+      StarterKit.configure({
+        document: false,
+      }),
       Table.configure({
         resizable: true,
       }),
