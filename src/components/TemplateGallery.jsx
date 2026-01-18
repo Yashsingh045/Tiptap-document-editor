@@ -47,9 +47,9 @@ const TEMPLATES = [
                         <div style="font-size: 10px; color: #444; font-style: italic; margin-bottom: 4px;">Tech Global Corp, San Francisco, CA</div>
                         <div style="font-size: 11px; line-height: 1.4; color: #333; margin-left: 16px;">
                             Architected a real-time collaborative document editor using Tiptap and Y.js, supporting 50+ concurrent users per document.
-                            </br>Led a team of 6 engineers in migrating legacy infrastructure to AWS, reducing server costs by 30% and improving uptime to 99.99%.
-                            </br>Implemented a CI/CD pipeline using GitHub Actions and Docker, cutting deployment time from 1 hour to 10 minutes.
-                            </br>Mentored junior developers, conducting code reviews and organizing weekly technical workshops.
+                            <br/>Led a team of 6 engineers in migrating legacy infrastructure to AWS, reducing server costs by 30% and improving uptime to 99.99%.
+                            <br/>Implemented a CI/CD pipeline using GitHub Actions and Docker, cutting deployment time from 1 hour to 10 minutes.
+                            <br/>Mentored junior developers, conducting code reviews and organizing weekly technical workshops.
                         </div>
                     </div>
 
@@ -61,9 +61,9 @@ const TEMPLATES = [
                         <div style="font-size: 10px; color: #444; font-style: italic; margin-bottom: 4px;">InnovateSoft Inc, Austin, TX</div>
                         <div style="font-size: 11px; line-height: 1.4; color: #333; margin-left: 16px;">
                             Developed responsive UI components using React and Tailwind CSS for a SaaS dashboard used by 10,000+ customers.
-                            </br>Optimized database queries in PostgreSQL, achieving 50% faster API response times for critical endpoints.
-                            </br>Integrated Stripe API for subscription payments, handling over $1M in annual recurring revenue.
-                            </br>Collaborated with UX designers to implement a dark mode, increasing user engagement by 15%.
+                            <br/>Optimized database queries in PostgreSQL, achieving 50% faster API response times for critical endpoints.
+                            <br/>Integrated Stripe API for subscription payments, handling over $1M in annual recurring revenue.
+                            <br/>Collaborated with UX designers to implement a dark mode, increasing user engagement by 15%.
                         </div>
                     </div>
 
