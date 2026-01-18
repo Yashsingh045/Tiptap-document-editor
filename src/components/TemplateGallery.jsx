@@ -27,19 +27,54 @@ const TEMPLATES = [
         content: `
             <div data-type="page" data-page-number="1">
                 <div class="page-content">
-                    <h1 style="text-align: center">YOUR NAME</h1>
-                    <p style="text-align: center; font-size: 14px; color: #666">City, Country | phone | email | linkedin.com/in/name</p>
-                    <hr />
-                    <h3>Experience</h3>
-                    <p><strong>Senior Software Engineer</strong> | tech Corp | 2021 – Present</p>
-                    <ul>
-                        <li>Led the development of a high-performance document editor.</li>
-                        <li>Managed a team of 5 developers to deliver features on time.</li>
-                    </ul>
-                    <h3>Education</h3>
-                    <p><strong>Bachelor of Science in Computer Science</strong> | University of tech | 2017 – 2021</p>
-                    <h3>Skills</h3>
-                    <p>React, Tiptap, Tailwind CSS, Node.js, ProseMirror</p>
+                    <h1 style="text-align: center; margin-bottom: 2px; font-size: 20px; font-weight: bold; color: #1a1a1a;">JONATHAN DOE</h1>
+                    <p style="text-align: center; font-size: 10px; color: #555; margin-bottom: 8px;">
+                        San Francisco, CA • (555) 123-4567 • j.doe@email.com • linkedin.com/in/jdoe
+                    </p>
+                    
+                    <h2 style="font-size: 12px; font-weight: bold; color: #2563eb; border-bottom: 1px solid #2563eb; padding-bottom: 1px; margin-bottom: 4px; text-transform: uppercase;">Professional Summary</h2>
+                    <p style="font-size: 11px; line-height: 1.2; color: #333; margin-bottom: 8px;">
+                        Innovative Senior Software Engineer with 8+ years of experience in building scalable web applications. Expert in React, Node.js, and cloud architecture.
+                    </p>
+
+                    <h2 style="font-size: 12px; font-weight: bold; color: #2563eb; border-bottom: 1px solid #2563eb; padding-bottom: 1px; margin-bottom: 4px; text-transform: uppercase;">Experience</h2>
+                    
+                    <div style="margin-bottom: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1px;">
+                            <strong style="font-size: 11px; color: #1a1a1a;">Senior Software Engineer</strong>
+                            <span style="font-size: 10px; color: #666;">2021 – Present</span>
+                        </div>
+                        <div style="font-size: 10px; color: #444; font-style: italic; margin-bottom: 2px;">Tech Global Corp, San Francisco, CA</div>
+                        <ul style="font-size: 11px; line-height: 1.2; color: #333; margin-left: 12px;">
+                            <li style="margin-bottom: 1px;">Architected a collaborative document editor using Tiptap and Y.js.</li>
+                            <li style="margin-bottom: 1px;">Led team of 6 engineers in migrating infrastructure to AWS.</li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-bottom: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1px;">
+                            <strong style="font-size: 11px; color: #1a1a1a;">Software Engineer II</strong>
+                            <span style="font-size: 10px; color: #666;">2018 – 2021</span>
+                        </div>
+                        <div style="font-size: 10px; color: #444; font-style: italic; margin-bottom: 2px;">InnovateSoft Inc, Austin, TX</div>
+                        <ul style="font-size: 11px; line-height: 1.2; color: #333; margin-left: 12px;">
+                            <li style="margin-bottom: 1px;">Developed responsive UI components using React and Tailwind CSS.</li>
+                            <li style="margin-bottom: 1px;">Optimized queries in PostgreSQL, achieving 50% faster API response.</li>
+                        </ul>
+                    </div>
+
+                    <h2 style="font-size: 12px; font-weight: bold; color: #2563eb; border-bottom: 1px solid #2563eb; padding-bottom: 1px; margin-bottom: 4px; text-transform: uppercase;">Skills</h2>
+                    <p style="font-size: 11px; line-height: 1.2; color: #333; margin-bottom: 8px;">
+                        <strong>Languages:</strong> JavaScript, TypeScript, SQL • <strong>Frontend:</strong> React, Next.js, Tailwind<br/>
+                        <strong>Backend:</strong> Node.js, Express, PostgreSQL • <strong>Tools:</strong> Docker, AWS
+                    </p>
+
+                    <h2 style="font-size: 12px; font-weight: bold; color: #2563eb; border-bottom: 1px solid #2563eb; padding-bottom: 1px; margin-bottom: 4px; text-transform: uppercase;">Education</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1px;">
+                        <strong style="font-size: 11px; color: #1a1a1a;">B.S. in Computer Science</strong>
+                        <span style="font-size: 10px; color: #666;">2014 – 2018</span>
+                    </div>
+                    <div style="font-size: 10px; color: #444;">University of California, Berkeley</div>
                 </div>
             </div>
         `
@@ -47,19 +82,44 @@ const TEMPLATES = [
     {
         id: 'letter',
         name: 'Letter',
-        subtitle: 'Spearmint',
+        subtitle: 'Formal',
         icon: <Mail size={48} className="text-rose-500" />,
         bgColor: 'bg-rose-50/30',
         content: `
             <div data-type="page" data-page-number="1">
                 <div class="page-content">
-                    <p>Your Name<br />Your Address<br />City, ZIP</p>
-                    <p style="margin-top: 40px">Date: ${new Date().toLocaleDateString()}</p>
-                    <p style="margin-top: 40px"><strong>Recipient Name</strong><br />Recipient Address<br />City, ZIP</p>
-                    <p style="margin-top: 40px">Dear [Recipient Name],</p>
-                    <p>This is a professional letter template. You can start typing your message here. The layout is optimized for A4 paper and follows industry standards for formal correspondence.</p>
-                    <p>Sincerely,</p>
-                    <p style="margin-top: 40px">[Your Name]</p>
+                    <div style="text-align: right; font-size: 14px; color: #444; margin-bottom: 40px;">
+                        <p><strong>Jonathan Doe</strong><br />
+                        123 Business Way<br />
+                        San Francisco, CA 94105<br />
+                        j.doe@email.com<br />
+                        (555) 123-4567</p>
+                    </div>
+
+                    <div style="font-size: 14px; color: #444; margin-bottom: 40px;">
+                        <p>${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    </div>
+
+                    <div style="font-size: 14px; color: #444; margin-bottom: 40px;">
+                        <p><strong>Hiring Manager</strong><br />
+                        Tech Global Corp<br />
+                        456 Innovation Blvd<br />
+                        Seattle, WA 98101</p>
+                    </div>
+
+                    <div style="font-size: 14px; line-height: 1.6; color: #1a1a1a; margin-bottom: 30px;">
+                        <p>Dear Hiring Manager,</p>
+                        
+                        <p>I am writing to express my strong interest in the Senior Software Engineer position at Tech Global Corp. With over 8 years of experience in full-stack development and a proven track record of delivering high-quality software solutions, I am confident that I can make a significant contribution to your team.</p>
+                        
+                        <p>In my current role at Tech Global Corp, I have led several critical projects, including the development of a real-time collaborative document editor. I am particularly impressed by Tech Global Corp's commitment to innovation and its focus on creating user-centric products.</p>
+                        
+                        <p>I am eager to bring my expertise in React, Node.js, and cloud architecture to Tech Global Corp. Thank you for your time and consideration. I look forward to the possibility of discussing how my skills and experience align with the needs of your team.</p>
+                        
+                        <p>Sincerely,</p>
+                        
+                        <p style="margin-top: 40px;"><strong>Jonathan Doe</strong></p>
+                    </div>
                 </div>
             </div>
         `

@@ -9,12 +9,12 @@ const PageView = ({ node, updateAttributes, editor, getPos }) => {
 
     useEffect(() => {
         const checkOverflow = () => {
-            if (!pageRef.current || !editor.isEditable || !editor.isFocused || window._isSplitting) return
+            if (!pageRef.current || !editor.isEditable || window._isSplitting) return
 
             const contentArea = pageRef.current.querySelector('.page-content')
             if (!contentArea) return
 
-            const maxHeight = 950
+            const maxHeight = 880
             const currentHeight = contentArea.scrollHeight
 
             if (currentHeight > maxHeight) {
