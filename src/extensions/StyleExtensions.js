@@ -6,6 +6,7 @@ import OrderedList from '@tiptap/extension-ordered-list'
 import { mergeAttributes } from '@tiptap/core'
 
 export const StyledParagraph = Paragraph.extend({
+    name: 'paragraph',
     addAttributes() {
         return {
             style: {
@@ -21,6 +22,7 @@ export const StyledParagraph = Paragraph.extend({
 })
 
 export const StyledHeading = Heading.extend({
+    name: 'heading',
     addAttributes() {
         return {
             ...this.parent?.(),
@@ -44,6 +46,7 @@ export const StyledHeading = Heading.extend({
 })
 
 export const StyledListItem = ListItem.extend({
+    name: 'listItem',
     addAttributes() {
         return {
             style: {
@@ -58,6 +61,7 @@ export const StyledListItem = ListItem.extend({
 })
 
 export const StyledBulletList = BulletList.extend({
+    name: 'bulletList',
     addAttributes() {
         return {
             style: {
@@ -72,6 +76,7 @@ export const StyledBulletList = BulletList.extend({
 })
 
 export const StyledOrderedList = OrderedList.extend({
+    name: 'orderedList',
     addAttributes() {
         return {
             style: {
