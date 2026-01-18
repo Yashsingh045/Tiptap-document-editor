@@ -25,7 +25,7 @@ const Page = Node.create({
                 default: 'Draft Document',
             },
             footer: {
-                default: 'LegalBridge Document Editor',
+                default: 'Page Footer',
             },
         }
     },
@@ -59,7 +59,9 @@ const Page = Node.create({
              */
             splitPage: (pos) => ({ tr, state, dispatch }) => {
                 if (dispatch) {
-                    tr.split(pos, 1, [{ type: state.schema.nodes.page.type }])
+                    // Splitting at depth 2 ensures we split the Page node (depth 1 is Paragraph, depth 0 is Doc)
+                    // This creates a new Page node and moves subsequent content into it.
+                    tr.split(pos, 2, [{ type: state.schema.nodes.page.type }])
                     return true
                 }
                 return false

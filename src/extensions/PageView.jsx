@@ -9,23 +9,40 @@ const PageView = ({ node, updateAttributes, editor, getPos }) => {
 
     useEffect(() => {
         const checkOverflow = () => {
-            if (!pageRef.current || !editor.isEditable) return
+            if (!pageRef.current || !editor.isEditable || !editor.isFocused) return
 
-            const contentHeight = pageRef.current.scrollHeight
-            const maxHeight = PAGE_HEIGHT_PX
+            const contentArea = pageRef.current.querySelector('.page-content')
+            if (!contentArea) return
 
-            if (contentHeight > maxHeight) {
-                console.log('Page overflow detected in NodeView')
+            // Available height for content: A4 height (1122px) - Padding/Margins
+            // We use the offsetHeight of the content area as the limit
+            const maxHeight = contentArea.offsetHeight
+            const currentHeight = contentArea.scrollHeight
+
+            if (currentHeight > maxHeight) {
+                const { selection } = editor.state
+                const pos = getPos()
+
+                // Only split if content is within the current page boundary
+                if (selection.from >= pos && selection.from <= pos + node.nodeSize) {
+                    editor.chain().focus().splitPage(selection.from).run()
+                }
             }
         }
 
-        const observer = new ResizeObserver(checkOverflow)
-        if (pageRef.current) {
-            observer.observe(pageRef.current)
+        const observer = new ResizeObserver(() => {
+            // Debounce to prevent performance hits
+            clearTimeout(window._paginationTimeout)
+            window._paginationTimeout = setTimeout(checkOverflow, 100)
+        })
+
+        const contentArea = pageRef.current?.querySelector('.page-content')
+        if (contentArea) {
+            observer.observe(contentArea)
         }
 
         return () => observer.disconnect()
-    }, [editor.isEditable])
+    }, [editor.isEditable, node.attrs, getPos, editor, node.nodeSize])
 
     return (
         <NodeViewWrapper className="page-wrapper group relative">
@@ -45,16 +62,19 @@ const PageView = ({ node, updateAttributes, editor, getPos }) => {
                 {/* Header */}
                 <div className="absolute top-8 left-[25.4mm] right-[25.4mm] flex justify-between items-center text-[10px] text-gray-400 border-b border-gray-50 pb-1 italic select-none">
                     <span>{header}</span>
-                    <span className="font-semibold text-gray-300">CONFIDENTIAL</span>
+                    <span className="font-semibold text-gray-300">INTERNAL USE</span>
                 </div>
 
                 {/* Content Area */}
-                <NodeViewContent className="outline-none min-h-[calc(297mm-50.8mm)]" />
+                <NodeViewContent
+                    className="outline-none min-h-[calc(297mm-50.8mm)] page-content"
+                    data-page-id={pageNumber}
+                />
 
                 {/* Footer */}
                 <div className="absolute bottom-8 left-[25.4mm] right-[25.4mm] flex justify-between items-center text-[10px] text-gray-400 border-t border-gray-50 pt-2 select-none">
                     <span>{footer}</span>
-                    <span>Page {pageNumber}</span>
+                    <span className="bg-gray-50 px-2 py-0.5 rounded-full border border-gray-100 font-medium">Page {pageNumber}</span>
                 </div>
             </div>
         </NodeViewWrapper>

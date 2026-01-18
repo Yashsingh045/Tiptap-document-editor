@@ -4,44 +4,67 @@ import { Plugin, PluginKey } from '@tiptap/pm/state'
 /**
  * Pagination Extension
  * 
- * Manages document-wide pagination logic including:
- * 1. Synchronizing page numbers across all 'page' nodes.
- * 2. Monitoring page heights and providing hooks for content reflow.
+ * Automatically manages 'page' nodes to ensure content stays within A4 boundaries.
  */
 const Pagination = Extension.create({
     name: 'pagination',
 
+    addOptions() {
+        return {
+            maxHeight: 1122, // A4 height in pixels at 96 DPI (approx)
+        }
+    },
+
+    addGlobalAttributes() {
+        return [
+            {
+                types: ['page'],
+                attributes: {
+                    contentHeight: {
+                        default: 0,
+                        renderHTML: attributes => ({
+                            'data-content-height': attributes.contentHeight,
+                        }),
+                        parseHTML: element => element.getAttribute('data-content-height'),
+                    },
+                },
+            },
+        ]
+    },
+
     addProseMirrorPlugins() {
+        const { maxHeight } = this.options
+        const editor = this.editor
+
         return [
             new Plugin({
-                key: new PluginKey('pagination'),
+                key: new PluginKey('pagination-monitor'),
                 view: (editorView) => {
                     return {
-                        update: (view, prevState) => {
-                            // Debounce update to prevent performance degradation during typing
-                            if (this.storage.timeout) clearTimeout(this.storage.timeout)
-                            this.storage.timeout = setTimeout(() => {
-                                this.options.handlePagination(view)
-                                this.options.syncPageNumbers(view)
-                            }, 500)
+                        update: (view) => {
+                            // Sync page numbers whenever the document structure changes
+                            this.storage.syncPageNumbers(view)
                         }
                     }
+                },
+                appendTransaction: (transactions, oldState, newState) => {
+                    // Avoid recursive calls if we just modified pagination
+                    if (transactions.some(tr => tr.getMeta('pagination-sync'))) {
+                        return null
+                    }
+
+                    // We will handle overflow logic here if needed, 
+                    // but for "ONLY type within visible page", we might want to 
+                    // prevent typing or move to next page.
+
+                    return null
                 }
-            }),
+            })
         ]
     },
 
     addStorage() {
         return {
-            timeout: null,
-        }
-    },
-
-    addOptions() {
-        return {
-            /**
-             * Ensures that every 'page' node has a sequential pageNumber attribute.
-             */
             syncPageNumbers: (view) => {
                 const { state, dispatch } = view
                 let tr = state.tr
@@ -65,14 +88,6 @@ const Pagination = Extension.create({
                     tr.setMeta('pagination-sync', true)
                     dispatch(tr)
                 }
-            },
-
-            /**
-             * Placeholder for advanced content reflow logic.
-             * In the current version, this monitors for overflow and logs warnings.
-             */
-            handlePagination: (view) => {
-                // Implementation for automatic reflow would go here
             }
         }
     }
