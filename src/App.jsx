@@ -4,16 +4,22 @@ import { Table } from '@tiptap/extension-table'
 import { TableRow } from '@tiptap/extension-table-row'
 import { TableCell } from '@tiptap/extension-table-cell'
 import { TableHeader } from '@tiptap/extension-table-header'
+import { TextAlign } from '@tiptap/extension-text-align'
+import { TextStyle } from '@tiptap/extension-text-style'
+import { Color } from '@tiptap/extension-color'
+import { FlexRow, BlockContainer } from './extensions/LayoutExtensions'
+import { StyledParagraph, StyledHeading, StyledListItem, StyledBulletList, StyledOrderedList } from './extensions/StyleExtensions'
 import Toolbar from './components/Toolbar'
 import Page from './extensions/Page'
 import Document from './extensions/Document'
 import Pagination from './extensions/Pagination'
 import DocumentSettings from './components/DocumentSettings'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import TemplateGallery from './components/TemplateGallery'
 import { ArrowLeft } from 'lucide-react'
 
 const App = () => {
+  const [currentDocId, setCurrentDocId] = useState(null)
   const [showGallery, setShowGallery] = useState(true)
 
   const editor = useEditor({
@@ -21,37 +27,124 @@ const App = () => {
       Document,
       StarterKit.configure({
         document: false,
+        paragraph: false,
+        heading: false,
+        listItem: false,
+        bulletList: false,
+        orderedList: false,
       }),
+      StyledParagraph,
+      StyledHeading,
+      StyledListItem,
+      StyledBulletList,
+      StyledOrderedList,
+      Page,
+      Pagination,
       Table.configure({
         resizable: true,
       }),
       TableRow,
       TableHeader,
       TableCell,
-      Page,
-      Pagination,
+      TextAlign.configure({
+        types: ['heading', 'paragraph', 'blockContainer', 'flexRow'],
+      }),
+      TextStyle,
+      Color,
+      FlexRow,
+      BlockContainer,
     ],
     content: '',
     editorProps: {
       attributes: {
-        class: 'prose prose-slate focus:outline-none max-w-none editor-root',
+        class: 'focus:outline-none',
       },
     },
   })
 
+  // Save document to localStorage
+  const saveDocument = () => {
+    if (!editor) return
+
+    const content = editor.getHTML()
+    const titleMatch = content.match(/<h1[^>]*>(.*?)<\/h1>/) || content.match(/<p[^>]*>(.*?)<\/p>/)
+    const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, '') : 'Untitled Document'
+
+    // Simple UUID generator fallback for non-secure contexts
+    const generateId = () => {
+      if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        return crypto.randomUUID()
+      }
+      return Date.now().toString(36) + Math.random().toString(36).substr(2)
+    }
+
+    const docId = currentDocId || generateId()
+    if (!currentDocId) setCurrentDocId(docId)
+
+    const newDoc = {
+      id: docId,
+      title: title || 'Untitled Document',
+      content,
+      lastModified: Date.now(),
+      preview: editor.getText().slice(0, 100)
+    }
+
+    try {
+      const existingDocs = JSON.parse(localStorage.getItem('tiptap-recent-docs') || '[]')
+      const otherDocs = existingDocs.filter(d => d.id !== docId)
+      const updatedDocs = [newDoc, ...otherDocs].slice(0, 50) // Limit to 50
+      localStorage.setItem('tiptap-recent-docs', JSON.stringify(updatedDocs))
+    } catch (e) {
+      console.error('Failed to save document:', e)
+    }
+  }
+
+  // Auto-save on content change
+  useEffect(() => {
+    if (!editor) return
+
+    const handleUpdate = () => {
+      // Debounce could be improved, but this is simple enough for now
+      // or we rely on Tiptap's update frequency. 
+      // Let's use a timeout to debounce.
+      clearTimeout(window._saveTimeout)
+      window._saveTimeout = setTimeout(saveDocument, 1000)
+    }
+
+    editor.on('update', handleUpdate)
+
+    return () => {
+      editor.off('update', handleUpdate)
+      clearTimeout(window._saveTimeout)
+    }
+  }, [editor, currentDocId])
+
   const handleTemplateSelect = (content) => {
     if (editor) {
       editor.commands.setContent(content)
+      setCurrentDocId(null) // Reset ID for new document
+      setShowGallery(false)
+      // Force an immediate save to create the entry? No, let user type first.
+      // Actually, saving immediately ensures it appears in "Recent" even if they don't type.
+      // Let's allow update listener to catch it, or force saving after a moment.
+      setTimeout(saveDocument, 500)
+    }
+  }
+
+  const handleLoadDocument = (doc) => {
+    if (editor) {
+      editor.commands.setContent(doc.content)
+      setCurrentDocId(doc.id)
       setShowGallery(false)
     }
   }
 
   if (showGallery) {
-    return <TemplateGallery onSelect={handleTemplateSelect} />
+    return <TemplateGallery onSelect={handleTemplateSelect} onLoad={handleLoadDocument} />
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col antialiased animate-in fade-in duration-500">
+    <div className="min-h-screen bg-slate-100 flex flex-col antialiased">
       <div className="bg-white border-b border-slate-200 px-4 py-2 flex items-center gap-4 no-print sticky top-0 z-60">
         <button
           onClick={() => setShowGallery(true)}
