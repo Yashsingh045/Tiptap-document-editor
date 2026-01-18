@@ -52,7 +52,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col antialiased animate-in fade-in duration-500">
-      <div className="bg-white border-b border-slate-200 px-4 py-2 flex items-center gap-4 no-print">
+      <div className="bg-white border-b border-slate-200 px-4 py-2 flex items-center gap-4 no-print sticky top-0 z-60">
         <button
           onClick={() => setShowGallery(true)}
           className="p-2 hover:bg-slate-100 rounded-lg text-slate-500 transition-colors flex items-center gap-2 text-sm font-medium"
@@ -66,7 +66,7 @@ const App = () => {
 
       <Toolbar editor={editor} />
 
-      <main className="flex-1 overflow-auto p-4 md:p-12 flex justify-center pb-32">
+      <main className="flex-1 overflow-auto p-0 block md:flex md:justify-center pb-32 no-scrollbar-x">
         <EditorContent editor={editor} className="max-w-[210mm] w-full" />
       </main>
 

@@ -88,7 +88,7 @@ const TEMPLATES = [
         content: `
             <div data-type="page" data-page-number="1">
                 <div class="page-content">
-                    <div style="text-align: right; font-size: 14px; color: #444; margin-bottom: 40px;">
+                    <div style="text-align: right; font-size: 14px; color: #444; margin-bottom: 30px;">
                         <p><strong>Jonathan Doe</strong><br />
                         123 Business Way<br />
                         San Francisco, CA 94105<br />
@@ -96,11 +96,11 @@ const TEMPLATES = [
                         (555) 123-4567</p>
                     </div>
 
-                    <div style="font-size: 14px; color: #444; margin-bottom: 40px;">
+                    <div style="font-size: 14px; color: #444; margin-bottom: 30px;">
                         <p>${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                     </div>
 
-                    <div style="font-size: 14px; color: #444; margin-bottom: 40px;">
+                    <div style="font-size: 14px; color: #444; margin-bottom: 30px;">
                         <p><strong>Hiring Manager</strong><br />
                         Tech Global Corp<br />
                         456 Innovation Blvd<br />
@@ -138,12 +138,12 @@ const TemplateGallery = ({ onSelect }) => {
                     <h1 className="text-lg font-bold text-slate-900 tracking-tight">Docs Editor</h1>
                 </div>
                 <div className="flex items-center gap-2">
-                    <button className="p-2.5 text-slate-500 hover:bg-slate-100 rounded-xl transition-all">
+                    {/* <button className="p-2.5 text-slate-500 hover:bg-slate-100 rounded-xl transition-all">
                         <LayoutGrid size={20} />
-                    </button>
-                    <button className="p-2.5 text-slate-500 hover:bg-slate-100 rounded-xl transition-all">
+                    </button> */}
+                    {/* <button className="p-2.5 text-slate-500 hover:bg-slate-100 rounded-xl transition-all">
                         <MoreVertical size={20} />
-                    </button>
+                    </button> */}
                 </div>
             </header>
 
@@ -152,10 +152,10 @@ const TemplateGallery = ({ onSelect }) => {
                 <div className="max-w-5xl mx-auto">
                     <div className="flex items-center justify-between mb-8">
                         <h2 className="text-base font-semibold text-slate-700 uppercase tracking-widest">Start a new document</h2>
-                        {/* <button className="text-sm font-medium text-slate-500 hover:text-primary flex items-center gap-1 transition-colors">
+                        <button className="text-sm font-medium text-slate-500 hover:text-primary flex items-center gap-1 transition-colors">
                             Template gallery
-                            <MoreVertical size={14} className="rotate-90" />
-                        </button> */}
+                            {/* <MoreVertical size={14} className="rotate-90" /> */}
+                        </button>
                     </div>
 
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">

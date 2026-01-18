@@ -57,7 +57,7 @@ const Toolbar = ({ editor }) => {
     }
 
     return (
-        <div className="sticky top-0 z-[60] p-3 bg-white/80 backdrop-blur-xl border-b border-slate-200/60 shadow-sm flex items-center justify-center no-print">
+        <div className="sticky top-12 z-[40] p-3 bg-white/80 backdrop-blur-xl border-b border-slate-200/60 shadow-sm flex items-center justify-center no-print">
             <div className="flex items-center gap-1 bg-slate-100/50 p-1.5 rounded-2xl border border-slate-200/40 max-w-full overflow-x-auto no-scrollbar">
 
                 {/* Structure Group */}

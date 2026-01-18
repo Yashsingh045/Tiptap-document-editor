@@ -14,7 +14,7 @@ const PageView = ({ node, updateAttributes, editor, getPos }) => {
             const contentArea = pageRef.current.querySelector('.page-content')
             if (!contentArea) return
 
-            const maxHeight = 880
+            const maxHeight = 960
             const currentHeight = contentArea.scrollHeight
 
             if (currentHeight > maxHeight) {
@@ -77,7 +77,7 @@ const PageView = ({ node, updateAttributes, editor, getPos }) => {
 
                 {/* Content Area */}
                 <NodeViewContent
-                    className="outline-none page-content flex-1"
+                    className="outline-none page-content"
                     data-page-id={pageNumber}
                 />
 

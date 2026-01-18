@@ -57,6 +57,21 @@ body {
   align-items: center;
 }
 
+@media screen and (max-width: 820px) {
+  .editor-root {
+    /* Scale down to fit viewport width (leaving tiny gap - 8px total) */
+    /* 794px is approx 210mm */
+    transform: scale(calc((100vw - 8px) / 794));
+    transform-origin: top left;
+    /* Force proper A4 width so internal layout text wrapping stays correct */
+    width: 220mm !important;
+    max-width: none !important;
+    margin: auto;
+
+  }
+
+}
+
 /* Realistic Page Styling */
 .page-wrapper {
   display: block;
