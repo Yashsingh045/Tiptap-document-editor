@@ -48,5 +48,4 @@ The application uses a custom Tiptap `Page` node extension. Instead of a single 
    npm run build
    ```
 
-## Development History
-This project was built iteratively with a focus on granular commits and structural integrity and features over 25 commits documenting the evolution of the pagination system.
+
