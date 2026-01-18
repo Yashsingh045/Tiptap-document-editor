@@ -45,12 +45,12 @@ const TEMPLATES = [
                             <span style="font-size: 10px; color: #666;">2021 – Present</span>
                         </div>
                         <div style="font-size: 10px; color: #444; font-style: italic; margin-bottom: 4px;">Tech Global Corp, San Francisco, CA</div>
-                        <ul style="font-size: 11px; line-height: 1.4; color: #333; margin-left: 16px;">
-                            <li style="margin-bottom: 2px;">Architected a real-time collaborative document editor using Tiptap and Y.js, supporting 50+ concurrent users per document.</li>
-                            <li style="margin-bottom: 2px;">Led a team of 6 engineers in migrating legacy infrastructure to AWS, reducing server costs by 30% and improving uptime to 99.99%.</li>
-                            <li style="margin-bottom: 2px;">Implemented a CI/CD pipeline using GitHub Actions and Docker, cutting deployment time from 1 hour to 10 minutes.</li>
-                            <li style="margin-bottom: 2px;">Mentored junior developers, conducting code reviews and organizing weekly technical workshops.</li>
-                        </ul>
+                        <div style="font-size: 11px; line-height: 1.4; color: #333; margin-left: 16px;">
+                            Architected a real-time collaborative document editor using Tiptap and Y.js, supporting 50+ concurrent users per document.
+                            </br>Led a team of 6 engineers in migrating legacy infrastructure to AWS, reducing server costs by 30% and improving uptime to 99.99%.
+                            </br>Implemented a CI/CD pipeline using GitHub Actions and Docker, cutting deployment time from 1 hour to 10 minutes.
+                            </br>Mentored junior developers, conducting code reviews and organizing weekly technical workshops.
+                        </div>
                     </div>
 
                     <div style="margin-bottom: 12px;">
@@ -59,24 +59,12 @@ const TEMPLATES = [
                             <span style="font-size: 10px; color: #666;">2018 – 2021</span>
                         </div>
                         <div style="font-size: 10px; color: #444; font-style: italic; margin-bottom: 4px;">InnovateSoft Inc, Austin, TX</div>
-                        <ul style="font-size: 11px; line-height: 1.4; color: #333; margin-left: 16px;">
-                            <li style="margin-bottom: 2px;">Developed responsive UI components using React and Tailwind CSS for a SaaS dashboard used by 10,000+ customers.</li>
-                            <li style="margin-bottom: 2px;">Optimized database queries in PostgreSQL, achieving 50% faster API response times for critical endpoints.</li>
-                            <li style="margin-bottom: 2px;">Integrated Stripe API for subscription payments, handling over $1M in annual recurring revenue.</li>
-                            <li style="margin-bottom: 2px;">Collaborated with UX designers to implement a dark mode, increasing user engagement by 15%.</li>
-                        </ul>
-                    </div>
-
-                    <div style="margin-bottom: 12px;">
-                        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
-                            <strong style="font-size: 12px; color: #1a1a1a;">Junior Software Developer</strong>
-                            <span style="font-size: 10px; color: #666;">2016 – 2018</span>
+                        <div style="font-size: 11px; line-height: 1.4; color: #333; margin-left: 16px;">
+                            Developed responsive UI components using React and Tailwind CSS for a SaaS dashboard used by 10,000+ customers.
+                            </br>Optimized database queries in PostgreSQL, achieving 50% faster API response times for critical endpoints.
+                            </br>Integrated Stripe API for subscription payments, handling over $1M in annual recurring revenue.
+                            </br>Collaborated with UX designers to implement a dark mode, increasing user engagement by 15%.
                         </div>
-                        <div style="font-size: 10px; color: #444; font-style: italic; margin-bottom: 4px;">WebSolutions LLC, Remote</div>
-                        <ul style="font-size: 11px; line-height: 1.4; color: #333; margin-left: 16px;">
-                            <li style="margin-bottom: 2px;">Built and maintained client websites using HTML, CSS, and JavaScript.</li>
-                            <li style="margin-bottom: 2px;">Assisted in the migration of a large e-commerce site to Shopify.</li>
-                        </ul>
                     </div>
 
                     <h2 style="font-size: 12px; font-weight: bold; color: #2563eb; border-bottom: 1px solid #2563eb; padding-bottom: 2px; margin-bottom: 8px; text-transform: uppercase;">Projects</h2>
