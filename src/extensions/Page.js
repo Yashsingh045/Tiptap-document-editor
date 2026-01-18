@@ -31,14 +31,24 @@ const Page = Node.create({
     },
 
     parseHTML() {
-        return [{
-            tag: 'div[data-type="page"]',
-            contentElement: '.page-content'
-        }]
+        return [
+            {
+                tag: 'div[data-type="page"]',
+                contentElement: '.page-content'
+            },
+            // Fallback for legacy/flat pages
+            {
+                tag: 'div[data-type="page"]'
+            }
+        ]
     },
 
     renderHTML({ HTMLAttributes }) {
-        return ['div', mergeAttributes(HTMLAttributes, { 'data-type': 'page', class: 'page' }), 0]
+        return [
+            'div',
+            mergeAttributes(HTMLAttributes, { 'data-type': 'page', class: 'page' }),
+            ['div', { class: 'page-content' }, 0]
+        ]
     },
 
     addKeyboardShortcuts() {

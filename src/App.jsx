@@ -62,9 +62,11 @@ const App = () => {
     },
   })
 
+  const [pendingLoad, setPendingLoad] = useState(null)
+
   // Save document to localStorage
   const saveDocument = () => {
-    if (!editor) return
+    if (!editor || pendingLoad) return // Don't save while loading
 
     const content = editor.getHTML()
     const titleMatch = content.match(/<h1[^>]*>(.*?)<\/h1>/) || content.match(/<p[^>]*>(.*?)<\/p>/)
@@ -99,14 +101,24 @@ const App = () => {
     }
   }
 
+  // Effect to handle pending document loads
+  useEffect(() => {
+    if (editor && pendingLoad) {
+      editor.commands.setContent(pendingLoad.content)
+      setCurrentDocId(pendingLoad.id)
+      setPendingLoad(null) // Clear pending state
+      editor.commands.focus('start')
+    }
+  }, [editor, pendingLoad])
+
   // Auto-save on content change
   useEffect(() => {
     if (!editor) return
 
     const handleUpdate = () => {
-      // Debounce could be improved, but this is simple enough for now
-      // or we rely on Tiptap's update frequency. 
-      // Let's use a timeout to debounce.
+      // Don't queue save if we are currently loading
+      if (pendingLoad) return
+
       clearTimeout(window._saveTimeout)
       window._saveTimeout = setTimeout(saveDocument, 1000)
     }
@@ -117,26 +129,23 @@ const App = () => {
       editor.off('update', handleUpdate)
       clearTimeout(window._saveTimeout)
     }
-  }, [editor, currentDocId])
+  }, [editor, currentDocId, pendingLoad])
 
   const handleTemplateSelect = (content) => {
     if (editor) {
       editor.commands.setContent(content)
       setCurrentDocId(null) // Reset ID for new document
       setShowGallery(false)
-      // Force an immediate save to create the entry? No, let user type first.
-      // Actually, saving immediately ensures it appears in "Recent" even if they don't type.
-      // Let's allow update listener to catch it, or force saving after a moment.
+      editor.commands.focus('start') // Focus at start for new docs
       setTimeout(saveDocument, 500)
     }
   }
 
   const handleLoadDocument = (doc) => {
-    if (editor) {
-      editor.commands.setContent(doc.content)
-      setCurrentDocId(doc.id)
-      setShowGallery(false)
-    }
+    // Instead of loading immediately, we set a pending state and switch view
+    // This allows the Editor component to mount/prepare before we shove data in
+    setPendingLoad(doc)
+    setShowGallery(false)
   }
 
   if (showGallery) {
